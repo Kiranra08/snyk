@@ -23,9 +23,11 @@ jobs:
         tags: hello-world-python:latest
     
     - name: Run Snyk to check Docker image for vulnerabilities
-      uses: snyk/actions/node@master
+      uses: snyk/actions/docker@v1
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        command: test
+        image: hello-world-python:latest
+        args: --file=Dockerfile
+
 
