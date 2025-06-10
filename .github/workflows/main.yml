@@ -21,6 +21,7 @@ jobs:
         context: .
         push: false
         tags: hello-world-python:latest
+        load: true
     
     - name: Run Snyk to check Docker image for vulnerabilities
       uses: snyk/actions/docker@master
