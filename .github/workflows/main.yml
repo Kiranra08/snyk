@@ -22,7 +22,12 @@ jobs:
         push: false
         tags: hello-world-python:latest
         load: true
-        
+
+    - name: Show contents of github.action_path
+      run: |
+        echo "github.action_path: ${{ github.action_path }}"
+        ls -lah ${{ github.action_path }}
+
     - name: Install depediences
       run: |
         pip install -r ${{ github.action_path }}/requirements.txt
