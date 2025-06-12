@@ -22,6 +22,10 @@ jobs:
         push: false
         tags: hello-world-python:latest
         load: true
+        
+    - name: Install depediences
+      run: |
+        pip install -r ${{ github.action_path }}/requirments.txt
     
     - name: Run Snyk to check Docker image for vulnerabilities
       uses: snyk/actions/docker@master
