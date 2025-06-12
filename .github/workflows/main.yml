@@ -40,4 +40,28 @@ jobs:
         image: hello-world-python:latest
         args: --file=Dockerfile
 
+    - name: SAST scan
+      id: sastuscan
+      if: always()
+      shell: bash
+      run: |
+        export SNYK_TOKEN=${{ inputs.snyk-token }}
+        chmod +x ${{ github.action_path }}/../../../src/scripts/SAST/snyk_code.sh
+        ${{ github.action_path }}/../../../src/scripts/SAST/snyk_code.sh
+        mkdir -p ${{ inputs.workspace }}/attestation-files
+        echo "Listing workspace contents:"
+        ls -lah ${{ inputs.workspace }}
+        ls -lah ${{ inputs.workspace }}/report
+        cp -f ${{ inputs.workspace }}/report/* ${{ inputs.workspace }}/
+        cp -f ${{ inputs.workspace }}/report/* ${{ inputs.workspace }}/attestation-files/
+        echo "***************** EXIT CODE *****************"
+        cat $WORKSPACE/snyk_sast_exit_code.txt
+        echo "SNYK_CODE_EXIT_CODE-$(cat $WORKSPACE/snyk_sast_exit_code.txt)" >> $GITHUB_OUTPUT
+        env:
+         SNYK_ORG: ${{ steps.get_org_id.outputs.SNYK_ORG }}
+         SNYK_TOKEN: ${{ inputs.snyk-token }}
+         WORKSPACE: ${{ inputs.workspace }}
+         GH_BRANCH: ${{ github.head_ref || github.ref_name }}
+
+
 
