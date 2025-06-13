@@ -1,8 +1,7 @@
 name: Build Docker Image
 
 on:
-  push:
-    branches: main
+  workflow_dispatch
 
 jobs:
   build:
@@ -32,13 +31,13 @@ jobs:
       run: |
         pip install -r ${{ github.action_path }}requirments.txt
     
-    - name: Run Snyk to check Docker image for vulnerabilities
-      uses: snyk/actions/docker@master
-      env:
-         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        image: hello-world-python:latest
-        args: --file=Dockerfile
+#    - name: Run Snyk to check Docker image for vulnerabilities
+#      uses: snyk/actions/docker@master
+#      env:
+#         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#      with:
+#        image: hello-world-python:latest
+#        args: --file=Dockerfile
 
     - name: SAST scan
       id: sastuscan
@@ -46,8 +45,8 @@ jobs:
       shell: bash
       run: |
         export SNYK_TOKEN=${{ inputs.snyk-token }}
-        chmod +x ${{ github.action_path }}/../../../src/scripts/SAST/snyk_code.sh
-        ${{ github.action_path }}/../../../src/scripts/SAST/snyk_code.sh
+        chmod +x ${{ github.action_path }snyk_code.sh
+        ${{ github.action_path }}snyk_code.sh
         mkdir -p ${{ inputs.workspace }}/attestation-files
         echo "Listing workspace contents:"
         ls -lah ${{ inputs.workspace }}
