@@ -44,9 +44,9 @@ jobs:
       if: always()
       shell: bash
       run: |
-        export SNYK_TOKEN=${{ inputs.snyk-token }}
-        chmod +x ${{ github.action_path }snyk_code.sh
-        ${{ github.action_path }}snyk_code.sh
+        export SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
+        chmod +x ${{ github.action_path }/snyk_code.sh
+        ${{ github.action_path }}/snyk_code.sh
         mkdir -p ${{ inputs.workspace }}/attestation-files
         echo "Listing workspace contents:"
         ls -lah ${{ inputs.workspace }}
