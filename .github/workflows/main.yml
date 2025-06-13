@@ -46,7 +46,7 @@ jobs:
       run: |
         export SNYK_TOKEN=${{ secrets.SNYK_TOKEN }}
         chmod +x ./snyk_code.sh
-        $./snyk_code.sh
+        ./snyk_code.sh
         mkdir -p ${{ inputs.workspace }}/attestation-files
         echo "Listing workspace contents:"
         ls -lah ${{ inputs.workspace }}
