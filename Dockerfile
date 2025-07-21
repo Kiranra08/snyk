@@ -5,3 +5,5 @@ WORKDIR /app
 COPY app.py .
 
 CMD ["python", "app.py"]
+
+ENV clientsecret=12345
