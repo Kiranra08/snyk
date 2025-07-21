@@ -1,0 +1,40 @@
+name: Secret Scan and History Rewrite
+
+on:
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  clean-history:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed for full history rewrite
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gitleaks
+          pip3 install git-filter-repo
+
+      - name: Run Gitleaks scan
+        run: |
+          gitleaks detect -v || echo "Gitleaks scan completed with findings."
+
+      - name: Rewrite Git history
+        run: |
+          echo "Replacing secrets using replacements.txt..."
+          git filter-repo --replace-text replacements.txt --force
+
+      - name: Push cleaned history
+        env:
+          GIT_AUTHOR_NAME: github-actions
+          GIT_AUTHOR_EMAIL: actions@github.com
+          GIT_COMMITTER_NAME: github-actions
+          GIT_COMMITTER_EMAIL: actions@github.com
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push --force --all
+          git push --force --tags
