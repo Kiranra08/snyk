@@ -1,2 +1,2 @@
 print("Hello, world!")
-clientsecret=1233
+clientsecret=123456
