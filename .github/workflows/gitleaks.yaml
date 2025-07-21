@@ -38,6 +38,6 @@ jobs:
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         run: |
-          git remote add origin https://x-access-token:${TOKEN_GITHUB}@github.com/Kiranra08/snyk
+          git remote add origin https://x-access-token:${TOKEN_GITHUB}@github.com/Kiranra08/snyk.git
           git push --force --all
           git push --force --tags
