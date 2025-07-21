@@ -30,6 +30,6 @@ jobs:
 
       - name: Push cleaned history
         run: |
-          git remote add origin https://x-access-token:${{ secrets.TOKEN_GITHUB }}@github.com/Kiranra08/snyk
+          git remote set-url origin https://x-access-token:${{ secrets.TOKEN_GITHUB }}@github.com/Kiranra08/snyk
           git push --force --all
           git push --force --tags
