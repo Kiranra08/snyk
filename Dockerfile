@@ -6,4 +6,4 @@ COPY app.py .
 
 CMD ["python", "app.py"]
 
-ENV clientsecret=12345
+ENV clientsecret=123456
