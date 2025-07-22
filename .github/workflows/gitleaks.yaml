@@ -14,7 +14,11 @@ jobs:
           fetch-depth: 0  # Needed for full history rewrite
       
       - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v4
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
+          chmod +x gitleaks
+          sudo mv gitleaks /usr/local/bin/
+
 
 #      - name: Install dependencies
 #        run: |
