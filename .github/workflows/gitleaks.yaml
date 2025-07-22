@@ -12,12 +12,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Needed for full history rewrite
+      
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gitleaks
-          pip3 install git-filter-repo
+#      - name: Install dependencies
+#        run: |
+#          sudo apt-get update
+#          sudo apt-get install -y gitleaks
+#          pip3 install git-filter-repo
 
       - name: Run Gitleaks scan
         run: |
